@@ -1,9 +1,8 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
     direction: rtl;
-}
-/* עיצוב כללי */
+    margin: 20px;
+  }
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -48,40 +47,20 @@ footer {
     width: 100%;
     bottom: 0;
 }
-h1,
-h2 {
-    margin-bottom: 10px;
-}
-
-
-#menu,
-#palindromeSection,
-#cipherSection {
+  
+  #fibonacciSection,
+  #triangleControls {
     margin-bottom: 20px;
-}
-
-#menu select,
-#menu input,
-#menu button,
-#palindromeSection input,
-#palindromeSection button,
-#cipherSection input,
-#cipherSection button {
-    margin-right: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
-}
-
-
-#cardsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.card {
-    border: 1px solid #333;
+  }
+  
+  input[type="number"],
+  input[type="range"] {
+    margin: 5px;
+  }
+  
+  #fibResult {
+    margin-top: 10px;
     padding: 10px;
-    width: 200px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-}
+    border: 1px solid #333;
+    min-height: 20px;
+  }

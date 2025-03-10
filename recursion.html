@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>דף חמישי - רקורסיה</title>
+  <link rel="stylesheet" href="recursion.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">דף הבית</a></li>
+            <li><a href="cards.html">דף שני</a></li>
+            <li><a href="thirdp.html">דף שלישי</a></li>
+            <li><a href="recursion.html">דף רביעי</a></li>
+        </ul>
+    </nav>
+  <h1>פיבונאצ'י ברקורסיה</h1>
+  <div id="fibonacciSection">
+    <input type="number" id="fibInput" placeholder="הכנס מספר שלם">
+    <button id="fibBtn">הצג סדרת פיבונאצ'י</button>
+    <div id="fibResult"></div>
+  </div>
+  
+  <hr>
+  
+  <h1>משולשים רקורסיביים</h1>
+  <div id="triangleControls">
+    <label>גודל משולש:
+      <input type="range" id="triangleSize" min="50" max="300" value="150">
+    </label>
+    <label>עומק רקורסיה:
+      <input type="range" id="triangleDepth" min="0" max="6" value="3">
+    </label>
+  </div>
+  <canvas id="triangleCanvas" width="500" height="500" style="border:1px solid #000;"></canvas>
+  <script src="reqcursion.js"></script>
+</body>
+</html>
