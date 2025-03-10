@@ -99,64 +99,55 @@ const usersArray = [
             houseNumber: 112
         }
     },
-
 ];
 
-function renderCards(cards) {
-    const container = document.getElementById('cardsContainer');
-    container.innerHTML = '';
-    if (cards.length === 0) {
-        container.innerHTML = '<p>לא נמצאו תוצאות</p>';
-        return;
-    }
-    cards.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'card';
+function renderCards(array) {
+    const container = document.getElementById("cardsContainer");
+    container.innerHTML = "";
+    array.forEach(user => {
+        const card = document.createElement("div");
+        card.className = "card";
         card.innerHTML = `
-        <p><strong>Name:</strong> ${item.name}</p>
-        <p><strong>Age:</strong> ${item.age}</p>
-        <p><strong>Admin:</strong> ${item.admin}</p>
-        <p><strong>Grades:</strong> ${item.grades.join(', ')}</p>
-        <p><strong>Address:</strong> ${item.address.city}, House #${item.address.houseNumber}</p>
-      `;
+      <h3>${user.name}</h3>
+      <p>Age: ${user.age}</p>
+      <p>Admin: ${user.admin}</p>
+      <p>Grades: ${user.grades.join(", ")}</p>
+      <p>City: ${user.address.city}</p>
+      <p>House Number: ${user.address.houseNumber}</p>
+    `;
         container.appendChild(card);
     });
 }
 
+renderCards(usersArray);
 
-renderCards(data);
-
-
-document.getElementById('findBtn').addEventListener('click', function () {
-    const field = document.getElementById('fieldSelect').value;
-    const filterVal = document.getElementById('filterInput').value.trim();
+document.getElementById("findBtn").addEventListener("click", () => {
+    const field = document.getElementById("fieldSelect").value;
+    const input = document.getElementById("filterInput").value.trim();
     let filtered = [];
 
-    if (field === 'age') {
-        const num = parseFloat(filterVal);
-        filtered = data.filter(item => item.age > num);
-    } else if (field === 'name') {
-        filtered = data.filter(item => item.name.toLowerCase().includes(filterVal.toLowerCase()));
-    } else if (field === 'admin') {
-        if (filterVal.toLowerCase() === "true") {
-            filtered = data.filter(item => item.admin === true);
-        } else if (filterVal.toLowerCase() === "false") {
-            filtered = data.filter(item => item.admin === false);
-        }
-    } else if (field === 'grades') {
-        const num = parseFloat(filterVal);
-        filtered = data.filter(item => {
-            const avg = item.grades.reduce((a, b) => a + b, 0) / item.grades.length;
+    if (field === "age") {
+        const ageInput = parseFloat(input);
+        filtered = usersArray.filter(user => user.age > ageInput);
+    } else if (field === "name") {
+        filtered = usersArray.filter(user => user.name.toLowerCase().includes(input.toLowerCase()));
+    } else if (field === "admin") {
+        const boolVal = input.toLowerCase() === "true";
+        filtered = usersArray.filter(user => user.admin === boolVal);
+    } else if (field === "grades") {
+        const num = parseFloat(input);
+        filtered = usersArray.filter(user => {
+            const avg = user.grades.reduce((a, b) => a + b, 0) / user.grades.length;
             return avg > num;
         });
-    } else if (field === 'address') {
-
-        const parts = filterVal.split('.');
+    } else if (field === "address") {
+        const parts = input.split(".");
         if (parts.length === 2) {
-            const [fieldName, value] = parts;
-            filtered = data.filter(item => {
-                if (item.address && item.address[fieldName]) {
-                    return item.address[fieldName].toString().toLowerCase() === value.toLowerCase();
+            const addrField = parts[0].trim();
+            const addrValue = parts[1].trim().toLowerCase();
+            filtered = usersArray.filter(user => {
+                if (user.address[addrField] !== undefined) {
+                    return String(user.address[addrField]).toLowerCase() === addrValue;
                 }
                 return false;
             });
@@ -165,64 +156,66 @@ document.getElementById('findBtn').addEventListener('click', function () {
     renderCards(filtered);
 });
 
-document.getElementById('allGradesBtn').addEventListener('click', function () {
-    const filterVal = parseFloat(document.getElementById('filterInput').value.trim());
-    const filtered = data.filter(item => item.grades.every(grade => grade > filterVal));
+document.getElementById("allGradesBtn").addEventListener("click", () => {
+    const input = parseFloat(document.getElementById("filterInput").value.trim());
+    const filtered = usersArray.filter(user => user.grades.every(grade => grade > input));
     renderCards(filtered);
 });
 
-document.getElementById('someGradesBtn').addEventListener('click', function () {
-    const filterVal = parseFloat(document.getElementById('filterInput').value.trim());
-    const filtered = data.filter(item => item.grades.some(grade => grade > filterVal));
+document.getElementById("someGradesBtn").addEventListener("click", () => {
+    const input = parseFloat(document.getElementById("filterInput").value.trim());
+    const filtered = usersArray.filter(user => user.grades.some(grade => grade > input));
     renderCards(filtered);
 });
 
-document.getElementById('manipulateBtn').addEventListener('click', function () {
-    const inputVal = parseFloat(document.getElementById('filterInput').value.trim());
-    const filtered = data.filter(item => {
-        const avg = item.grades.reduce((a, b) => a + b, 0) / item.grades.length;
-        return avg < inputVal && item.address.houseNumber > inputVal;
-    }).map(item => {
-        return { ...item, age: item.age + inputVal };
+document.getElementById("manipulationBtn").addEventListener("click", () => {
+    const input = parseFloat(document.getElementById("filterInput").value.trim());
+    const filtered = usersArray.filter(user => {
+        const avg = user.grades.reduce((a, b) => a + b, 0) / user.grades.length;
+        return avg < input && user.address.houseNumber > input;
+    }).map(user => {
+        let newUser = { ...user };
+        newUser.age = newUser.age + input;
+        return newUser;
     });
     renderCards(filtered);
 });
 
-
-
-function caesarCipher(str, shift, encrypt = true) {
-    return str.split('').map(char => {
-        if (char.match(/[a-z]/i)) {
-            const code = char.charCodeAt(0);
-            const base = (code >= 65 && code <= 90) ? 65 : 97;
-            if (encrypt) {
-                return String.fromCharCode(((code - base + shift) % 26) + base);
-            } else {
-                return String.fromCharCode(((code - base - shift + 26) % 26) + base);
-            }
-        }
-        return char;
-    }).join('');
-}
-
-document.getElementById('encryptBtn').addEventListener('click', function () {
-    const text = document.getElementById('cipherText').value;
-    const shift = parseInt(document.getElementById('shiftNumber').value, 10);
-    if (isNaN(shift)) {
-        alert('הזן מספר תקין עבור השיפט.');
-        return;
-    }
-    const encrypted = caesarCipher(text, shift, true);
-    document.getElementById('cipherResult').textContent = 'Encrypted: ' + encrypted;
+document.getElementById("palindromeBtn").addEventListener("click", () => {
+    const inputField = document.getElementById("palindromeInput");
+    const str = inputField.value.trim();
+    const isPal = str.toLowerCase() === str.toLowerCase().split("").reverse().join("");
+    inputField.style.backgroundColor = isPal ? "green" : "red";
 });
 
-document.getElementById('decryptBtn').addEventListener('click', function () {
-    const text = document.getElementById('cipherText').value;
-    const shift = parseInt(document.getElementById('shiftNumber').value, 10);
-    if (isNaN(shift)) {
-        alert('הזן מספר תקין עבור השיפט.');
-        return;
-    }
-    const decrypted = caesarCipher(text, shift, false);
-    document.getElementById('cipherResult').textContent = 'Decrypted: ' + decrypted;
+function caesarCipher(str, shift) {
+    return str.split("").map(char => {
+        let code = char.charCodeAt(0);
+        if (code >= 65 && code <= 90) {
+            return String.fromCharCode(((code - 65 + shift) % 26) + 65);
+        }
+        else if (code >= 97 && code <= 122) {
+            return String.fromCharCode(((code - 97 + shift) % 26) + 97);
+        }
+        else {
+            return char;
+        }
+    }).join("");
+}
+
+
+document.getElementById("encryptBtn").addEventListener("click", () => {
+    const text = document.getElementById("cipherText").value;
+    const shift = parseInt(document.getElementById("cipherNumber").value);
+    const encrypted = caesarCipher(text, shift);
+    document.getElementById("cipherResult").innerText = encrypted;
+});
+
+
+document.getElementById("decryptBtn").addEventListener("click", () => {
+    const text = document.getElementById("cipherText").value;
+    const shift = parseInt(document.getElementById("cipherNumber").value);
+
+    const decrypted = caesarCipher(text, (26 - shift) % 26);
+    document.getElementById("cipherResult").innerText = decrypted;
 });

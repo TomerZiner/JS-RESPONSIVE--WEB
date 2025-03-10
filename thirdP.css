@@ -1,71 +1,43 @@
-.box-select {
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    direction: rtl;
+}
+
+h1,
+h2 {
+    margin-bottom: 10px;
+}
+
+
+#menu,
+#palindromeSection,
+#cipherSection {
+    margin-bottom: 20px;
+}
+
+#menu select,
+#menu input,
+#menu button,
+#palindromeSection input,
+#palindromeSection button,
+#cipherSection input,
+#cipherSection button {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+
+#cardsContainer {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.inp {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+.card {
+    border: 1px solid #333;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
-
-.btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-#arrayL {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    width: 100%;
-    position: relative;
-    display: block;
-    height: 30px;
-    font-size: 12px;
-    font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
-
-}
-li.button {
-    background:transparent url(../images/nav_bg.png) repeat-x top left;
-    height:30px;
-    width:auto;
-    }
-    
-    
-    
-    ul#arrayL li
-    {
-    display:inline-block;
-    margin:50px;
-    width:auto;
-    }
-    
-    ul#arrayL li a
-    {
-    display:inline-block;
-    color:#999999;
-    text-decoration:none;
-    font-weight:bold;
-    padding:8px 20px 0 20px;
-    width:auto;
-    }
-    
-    ul#arrayL li a:hover
-    {   
-    color:#FFFFFF;
-    height:22px;    
-    }
-    
-    
-    ul#arrayL li a.current
-    {
-    display:inline-block;
-    height:22px;
-    margin:0;
-    }
